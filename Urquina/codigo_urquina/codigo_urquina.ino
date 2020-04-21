@@ -28,17 +28,24 @@ lcd.begin(16,2);
 }
 
 void loop() {
+  //DEFINICION SENSOR DE CORRIENTE ACS 712 20A
+  float ins=2.5;//intercecion eje y;
+  float sens=0.1;//sencibilidad sensor
+  float tencion;//voltaje sensor
+  float corriente;//corrienteg
+  //FIN DEFINICION SENSOR DE CORRIENTE
+  
   int decimal,a0,a1,a2,a3,a4,a5,a6,a7;
   float temp,lum;
 
   lcd.clear();
-   lcd.clear();
   lcd.clear();
-   lcd.clear();
-   lcd.clear();
+  lcd.clear();
+  lcd.clear();
+  lcd.clear();
   
   for (int i=0 ; i<939 ; i++){
-    digitalWrite(select,HIGH);
+   digitalWrite(select,HIGH);
   a0=digitalRead(pin0);
   a1=digitalRead(pin1);
   a2=digitalRead(pin2);
@@ -48,12 +55,18 @@ void loop() {
   a6=digitalRead(pin6);
   a7=digitalRead(pin7);
   decimal=a0*(1)+a1*(2)+a2*(4)+a3*(8)+a4*(16)+a5*(32)+a6*(64)+a7*(128);
+
   //Ecuacion Para Sensor De ...
-  lum=((0.000000000000007)*(decimal)*(decimal))+(0.000000000000005*(decimal))+0.4926;
+   //la tencion es
+tencion=(decimal*5.0)/255;
+//para evaluar varia muestra de la corriente
+corriente=(tencion-ins)/sens;
+ 
+ // lum=((0.000000000000007)*(decimal)*(decimal))+(0.000000000000005*(decimal))+0.4926;
   lcd.setCursor(0,1);
   lcd.print("A");
   lcd.setCursor(2,1);
-  lcd.print(lum);
+  lcd.print(corriente);
   lcd.setCursor(9,1);
   lcd.print("Amp");;
   }
